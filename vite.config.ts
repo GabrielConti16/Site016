@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
     // Usar './' faz com que funcione em qualquer subpasta (como no GitHub Pages)
     base: './', 
     define: {
+      'process.env': {}, // Fix crucial para evitar erro "process is not defined" no navegador
       'process.env.API_KEY': JSON.stringify(env.API_KEY),
     },
     build: {
