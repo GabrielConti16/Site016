@@ -281,8 +281,12 @@
                 </div>
             </div>
 
-            <button onclick="scrollToSection('about')" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 hover:text-white transition-colors animate-bounce cursor-interactive">
-                <i data-lucide="arrow-down" class="w-8 h-8"></i>
+            <button onclick="scrollToSection('about')" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-neon-cyan hover:text-white transition-colors cursor-interactive z-40 p-2 opacity-90 hover:opacity-100">
+                <!-- SVG INLINE PARA GARANTIR VISIBILIDADE SEM SCRIPT -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-[0_0_8px_rgba(0,243,255,0.6)]">
+                    <path d="M12 5v14"></path>
+                    <path d="m19 12-7 7-7-7"></path>
+                </svg>
             </button>
         </section>
 
@@ -394,7 +398,6 @@
             <div class="container mx-auto px-6">
                 <div class="flex flex-col md:flex-row gap-16 justify-between items-center md:items-start">
                     <div class="w-full md:w-1/2">
-                        <h2 className="font-display text-4xl font-bold text-white mb-6">BOOKING & CONTATO</h2>
                         <h2 class="font-display text-4xl font-bold text-white mb-6">BOOKING & CONTATO</h2>
                         <p class="text-gray-400 mb-10 max-w-md">Para contratações, remixes ou colaborações, entre em contato com nossa equipe de management.</p>
                         <div class="space-y-6">
@@ -428,257 +431,262 @@
     </main>
 
     <script>
-        // === ICON INITIALIZATION ===
-        lucide.createIcons();
-
-        // === GLOBAL VARIABLES ===
-        let easterEggClicks = 0;
-        let easterEggTimer = null;
-        let playingTrack = null;
-
-        // === SCROLL SPY & NAVBAR ===
-        const navbar = document.getElementById('navbar');
-        const navLogoIcon = document.getElementById('nav-logo-icon');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        let isMobileMenuOpen = false;
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('bg-deep-black/90', 'backdrop-blur-md', 'py-4');
-                navbar.classList.remove('bg-transparent', 'py-6');
-                navLogoIcon.classList.add('animate-spin-slow');
-            } else {
-                navbar.classList.remove('bg-deep-black/90', 'backdrop-blur-md', 'py-4');
-                navbar.classList.add('bg-transparent', 'py-6');
-                navLogoIcon.classList.remove('animate-spin-slow');
-            }
-
-            // Active section highlighting
-            const sections = ['home', 'about', 'music', 'ai-vibe', 'contact'];
-            let current = '';
-            sections.forEach(section => {
-                const element = document.getElementById(section);
-                if (element && window.scrollY >= (element.offsetTop - 150)) {
-                    current = section;
-                }
-            });
-
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('text-neon-cyan');
-                link.classList.add('text-gray-400');
-                if (link.dataset.section === current) {
-                    link.classList.add('text-neon-cyan');
-                    link.classList.remove('text-gray-400');
-                }
-            });
-        });
-
-        function scrollToSection(id) {
-            const element = document.getElementById(id);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        function toggleMobileMenu() {
-            isMobileMenuOpen = !isMobileMenuOpen;
-            if (isMobileMenuOpen) {
-                mobileMenu.classList.remove('hidden');
-                menuIcon.setAttribute('data-lucide', 'x');
-            } else {
-                mobileMenu.classList.add('hidden');
-                menuIcon.setAttribute('data-lucide', 'menu');
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            // === ICON INITIALIZATION ===
             lucide.createIcons();
-        }
 
-        // === MOUSE FX (Cursor & Parallax) ===
-        const cursorRing = document.getElementById('cursor-ring');
-        const cursorRingWrapper = document.getElementById('cursor-ring-wrapper');
-        const cursorDot = document.getElementById('cursor-dot');
-        const spotlight = document.getElementById('spotlight');
-        const blobs = [
-            { el: document.getElementById('blob-1'), factor: 0.04 },
-            { el: document.getElementById('blob-2'), factor: 0.06 },
-            { el: document.getElementById('blob-3'), factor: -0.02 },
-        ];
+            // === GLOBAL VARIABLES ===
+            let easterEggClicks = 0;
+            let easterEggTimer = null;
+            let playingTrack = null;
 
-        window.addEventListener('mousemove', (e) => {
-            // Dot (Instant)
-            cursorDot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
-            
-            // Ring (Lag)
-            cursorRingWrapper.animate({
-                transform: `translate3d(${e.clientX}px, ${e.clientY}px, 0)`
-            }, { duration: 400, fill: "forwards" });
+            // === SCROLL SPY & NAVBAR ===
+            const navbar = document.getElementById('navbar');
+            const navLogoIcon = document.getElementById('nav-logo-icon');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            let isMobileMenuOpen = false;
 
-            // Spotlight
-            spotlight.style.background = `radial-gradient(800px circle at ${e.clientX}px ${e.clientY}px, rgba(20, 20, 30, 0.4), transparent 40%)`;
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-deep-black/90', 'backdrop-blur-md', 'py-4');
+                    navbar.classList.remove('bg-transparent', 'py-6');
+                    if(navLogoIcon) navLogoIcon.classList.add('animate-spin-slow');
+                } else {
+                    navbar.classList.remove('bg-deep-black/90', 'backdrop-blur-md', 'py-4');
+                    navbar.classList.add('bg-transparent', 'py-6');
+                    if(navLogoIcon) navLogoIcon.classList.remove('animate-spin-slow');
+                }
 
-            // Parallax
-            blobs.forEach(blob => {
-                if(blob.el) {
-                    const x = (window.innerWidth / 2 - e.clientX) * blob.factor;
-                    const y = (window.innerHeight / 2 - e.clientY) * blob.factor;
-                    blob.el.style.transform = `translate(${x}px, ${y}px)`;
+                // Active section highlighting
+                const sections = ['home', 'about', 'music', 'ai-vibe', 'contact'];
+                let current = '';
+                sections.forEach(section => {
+                    const element = document.getElementById(section);
+                    if (element && window.scrollY >= (element.offsetTop - 150)) {
+                        current = section;
+                    }
+                });
+
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('text-neon-cyan');
+                    link.classList.add('text-gray-400');
+                    if (link.dataset.section === current) {
+                        link.classList.add('text-neon-cyan');
+                        link.classList.remove('text-gray-400');
+                    }
+                });
+            });
+
+            window.scrollToSection = function(id) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            window.toggleMobileMenu = function() {
+                isMobileMenuOpen = !isMobileMenuOpen;
+                if (isMobileMenuOpen) {
+                    mobileMenu.classList.remove('hidden');
+                    menuIcon.setAttribute('data-lucide', 'x');
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.setAttribute('data-lucide', 'menu');
+                }
+                lucide.createIcons();
+            }
+
+            // === MOUSE FX (Cursor & Parallax) ===
+            const cursorRing = document.getElementById('cursor-ring');
+            const cursorRingWrapper = document.getElementById('cursor-ring-wrapper');
+            const cursorDot = document.getElementById('cursor-dot');
+            const spotlight = document.getElementById('spotlight');
+            const blobs = [
+                { el: document.getElementById('blob-1'), factor: 0.04 },
+                { el: document.getElementById('blob-2'), factor: 0.06 },
+                { el: document.getElementById('blob-3'), factor: -0.02 },
+            ];
+
+            window.addEventListener('mousemove', (e) => {
+                // Dot (Instant)
+                if(cursorDot) cursorDot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+                
+                // Ring (Lag)
+                if(cursorRingWrapper) {
+                    cursorRingWrapper.animate({
+                        transform: `translate3d(${e.clientX}px, ${e.clientY}px, 0)`
+                    }, { duration: 400, fill: "forwards" });
+                }
+
+                // Spotlight
+                if(spotlight) spotlight.style.background = `radial-gradient(800px circle at ${e.clientX}px ${e.clientY}px, rgba(20, 20, 30, 0.4), transparent 40%)`;
+
+                // Parallax
+                blobs.forEach(blob => {
+                    if(blob.el) {
+                        const x = (window.innerWidth / 2 - e.clientX) * blob.factor;
+                        const y = (window.innerHeight / 2 - e.clientY) * blob.factor;
+                        blob.el.style.transform = `translate(${x}px, ${y}px)`;
+                    }
+                });
+            });
+
+            // Interactive Hover Effect
+            document.addEventListener('mouseover', (e) => {
+                const target = e.target;
+                const isInteractive = target.closest('a') || target.closest('button') || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.classList.contains('cursor-interactive');
+                
+                if (isInteractive && cursorRing) {
+                    cursorRing.classList.remove('w-8', 'h-8', 'bg-transparent');
+                    cursorRing.classList.add('w-16', 'h-16', 'bg-white/20', 'border-transparent', 'backdrop-blur-sm');
+                } else if(cursorRing) {
+                    cursorRing.classList.add('w-8', 'h-8', 'bg-transparent');
+                    cursorRing.classList.remove('w-16', 'h-16', 'bg-white/20', 'border-transparent', 'backdrop-blur-sm');
                 }
             });
-        });
 
-        // Interactive Hover Effect
-        document.addEventListener('mouseover', (e) => {
-            const target = e.target;
-            const isInteractive = target.closest('a') || target.closest('button') || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.classList.contains('cursor-interactive');
-            
-            if (isInteractive) {
-                cursorRing.classList.remove('w-8', 'h-8', 'bg-transparent');
-                cursorRing.classList.add('w-16', 'h-16', 'bg-white/20', 'border-transparent', 'backdrop-blur-sm');
-            } else {
-                cursorRing.classList.add('w-8', 'h-8', 'bg-transparent');
-                cursorRing.classList.remove('w-16', 'h-16', 'bg-white/20', 'border-transparent', 'backdrop-blur-sm');
-            }
-        });
+            // === MUSIC LOGIC ===
+            const tracks = [
+                { id: '1', title: 'Concrete Jungle (Original Mix)', duration: '6:42', genre: 'Industrial Techno', bpm: 132 },
+                { id: '2', title: 'Neon Shadows', duration: '5:15', genre: 'Acid House', bpm: 128 },
+                { id: '3', title: 'System Failure', duration: '7:01', genre: 'Dark Techno', bpm: 135 },
+                { id: '4', title: 'Protocol 016', duration: '6:20', genre: 'Hypnotic', bpm: 130 },
+            ];
 
-        // === MUSIC LOGIC ===
-        const tracks = [
-            { id: '1', title: 'Concrete Jungle (Original Mix)', duration: '6:42', genre: 'Industrial Techno', bpm: 132 },
-            { id: '2', title: 'Neon Shadows', duration: '5:15', genre: 'Acid House', bpm: 128 },
-            { id: '3', title: 'System Failure', duration: '7:01', genre: 'Dark Techno', bpm: 135 },
-            { id: '4', title: 'Protocol 016', duration: '6:20', genre: 'Hypnotic', bpm: 130 },
-        ];
+            const trackListContainer = document.getElementById('track-list');
 
-        const trackListContainer = document.getElementById('track-list');
-
-        function renderTracks() {
-            trackListContainer.innerHTML = tracks.map(track => `
-                <div class="group flex items-center justify-between p-4 border border-white/5 hover:border-neon-cyan/50 hover:bg-white/5 transition-all duration-300 ${playingTrack === track.id ? 'border-neon-cyan bg-white/5' : ''}">
-                    <div class="flex items-center gap-4">
-                        <button onclick="toggleTrack('${track.id}')" class="w-10 h-10 flex items-center justify-center rounded-full border ${playingTrack === track.id ? 'border-neon-cyan text-neon-cyan' : 'border-white/20 text-white group-hover:border-white'} transition-colors cursor-interactive">
-                            <i data-lucide="${playingTrack === track.id ? 'pause' : 'play'}" class="w-4 h-4"></i>
-                        </button>
-                        <div>
-                            <h4 class="font-display font-bold text-lg ${playingTrack === track.id ? 'text-neon-cyan' : 'text-white'}">${track.title}</h4>
-                            <div class="flex gap-3 text-xs text-gray-500 uppercase tracking-wider">
-                                <span>${track.genre}</span>
-                                <span class="w-1 h-1 bg-gray-600 rounded-full self-center"></span>
-                                <span>${track.bpm} BPM</span>
+            function renderTracks() {
+                if(!trackListContainer) return;
+                trackListContainer.innerHTML = tracks.map(track => `
+                    <div class="group flex items-center justify-between p-4 border border-white/5 hover:border-neon-cyan/50 hover:bg-white/5 transition-all duration-300 ${playingTrack === track.id ? 'border-neon-cyan bg-white/5' : ''}">
+                        <div class="flex items-center gap-4">
+                            <button onclick="toggleTrack('${track.id}')" class="w-10 h-10 flex items-center justify-center rounded-full border ${playingTrack === track.id ? 'border-neon-cyan text-neon-cyan' : 'border-white/20 text-white group-hover:border-white'} transition-colors cursor-interactive">
+                                <i data-lucide="${playingTrack === track.id ? 'pause' : 'play'}" class="w-4 h-4"></i>
+                            </button>
+                            <div>
+                                <h4 class="font-display font-bold text-lg ${playingTrack === track.id ? 'text-neon-cyan' : 'text-white'}">${track.title}</h4>
+                                <div class="flex gap-3 text-xs text-gray-500 uppercase tracking-wider">
+                                    <span>${track.genre}</span>
+                                    <span class="w-1 h-1 bg-gray-600 rounded-full self-center"></span>
+                                    <span>${track.bpm} BPM</span>
+                                </div>
                             </div>
                         </div>
+                        <div class="flex items-center gap-4">
+                            <span class="font-mono text-sm text-gray-400 hidden sm:block">${track.duration}</span>
+                            <a href="#" class="text-gray-500 hover:text-white transition-colors cursor-interactive"><i data-lucide="external-link" class="w-4 h-4"></i></a>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <span class="font-mono text-sm text-gray-400 hidden sm:block">${track.duration}</span>
-                        <a href="#" class="text-gray-500 hover:text-white transition-colors cursor-interactive"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        function toggleTrack(id) {
-            playingTrack = playingTrack === id ? null : id;
-            renderTracks();
-        }
-
-        renderTracks();
-
-        // === AI VIBE GENERATOR (Offline) ===
-        const OFFLINE_VIBES = [
-            { text: "Ecos metálicos reverberam no vazio de concreto. A escuridão dança com a luz estroboscópica.", track: "Industrial Soul - Artigo 016 Remix" },
-            { text: "Frequências baixas distorcem a realidade. O cheiro de chuva ácida e fumaça de máquina preenche seus pulmões.", track: "Acid Rain 303 - Original Mix" },
-            { text: "Um labirinto de néon quebrado onde o tempo para. Batidas cardíacas sincronizadas com o kick drum distorcido.", track: "System Error - Extended Dub" },
-            { text: "A cidade dorme, mas as máquinas continuam sussurrando. Uma melodia hipnótica surge do caos estático.", track: "Midnight Protocol - Artigo 016 Edit" },
-            { text: "Vozes sintéticas narram o fim de uma era. O baixo rola como um trovão distante em uma tempestade elétrica.", track: "Dystopian Future - Raw Cut" }
-        ];
-
-        function generateVibe() {
-            const mood = document.getElementById('vibe-mood').value;
-            const setting = document.getElementById('vibe-setting').value;
-            const btn = document.getElementById('vibe-btn');
-            const resultBox = document.getElementById('vibe-result');
-            
-            if (!mood || !setting) return;
-
-            // Loading state
-            btn.classList.add('bg-gray-800', 'text-gray-500', 'cursor-not-allowed');
-            btn.classList.remove('bg-gradient-to-r', 'text-black', 'hover:scale-105');
-            document.getElementById('vibe-btn-text').textContent = 'Acessando Banco de Dados...';
-            document.getElementById('vibe-icon').setAttribute('data-lucide', 'loader-2');
-            document.getElementById('vibe-icon').classList.add('animate-spin');
-            resultBox.classList.add('hidden');
-            lucide.createIcons();
-
-            setTimeout(() => {
-                const random = OFFLINE_VIBES[Math.floor(Math.random() * OFFLINE_VIBES.length)];
-                
-                document.getElementById('vibe-result-text').textContent = `"${random.text}"`;
-                document.getElementById('vibe-result-track').textContent = random.track;
-                
-                resultBox.classList.remove('hidden');
-                
-                // Reset Btn
-                btn.classList.remove('bg-gray-800', 'text-gray-500', 'cursor-not-allowed');
-                btn.classList.add('bg-gradient-to-r', 'text-black', 'hover:scale-105');
-                document.getElementById('vibe-btn-text').textContent = 'Sincronizar Vibe';
-                document.getElementById('vibe-icon').setAttribute('data-lucide', 'sparkles');
-                document.getElementById('vibe-icon').classList.remove('animate-spin');
+                `).join('');
                 lucide.createIcons();
-            }, 2000);
-        }
-
-        // === EASTER EGG (Horror ARG) ===
-        function handleSecretClick() {
-            clearTimeout(easterEggTimer);
-            easterEggClicks++;
-            
-            if (easterEggClicks === 5) {
-                startEasterEgg();
-                easterEggClicks = 0;
-            } else {
-                easterEggTimer = setTimeout(() => easterEggClicks = 0, 2000);
             }
-        }
 
-        function startEasterEgg() {
-            const overlay = document.getElementById('easter-egg-overlay');
-            const content = document.getElementById('ee-content');
-            
-            overlay.classList.remove('hidden');
-            overlay.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-            document.getElementById('cursor-ring-wrapper').classList.add('opacity-0');
-            document.getElementById('cursor-dot').classList.add('opacity-0');
+            window.toggleTrack = function(id) {
+                playingTrack = playingTrack === id ? null : id;
+                renderTracks();
+            }
 
-            // Sequence
-            setTimeout(() => {
-                content.innerHTML = `<h1 class="text-horror-red font-mono text-xl md:text-3xl tracking-widest animate-crt-flicker">SYSTEM_BREACH_DETECTED //<br/>ERROR: 0x16_SOUL_NOT_FOUND</h1>`;
-            }, 200);
+            renderTracks();
 
-            setTimeout(() => {
-                content.innerHTML = `
-                    <div class="animate-shake">
-                        <h1 class="text-white font-display font-black text-6xl md:text-9xl horror-text mix-blend-difference mb-4">NÃO OLHE</h1>
-                        <h2 class="text-horror-red font-sans tracking-[1em] text-sm uppercase">Para trás</h2>
-                        <p class="mt-12 font-mono text-gray-500 text-xs">-23.5505° S, 46.6333° W <br/>31.10.2025</p>
-                    </div>`;
-            }, 1700);
+            // === AI VIBE GENERATOR (Offline) ===
+            const OFFLINE_VIBES = [
+                { text: "Ecos metálicos reverberam no vazio de concreto. A escuridão dança com a luz estroboscópica.", track: "Industrial Soul - Artigo 016 Remix" },
+                { text: "Frequências baixas distorcem a realidade. O cheiro de chuva ácida e fumaça de máquina preenche seus pulmões.", track: "Acid Rain 303 - Original Mix" },
+                { text: "Um labirinto de néon quebrado onde o tempo para. Batidas cardíacas sincronizadas com o kick drum distorcido.", track: "System Error - Extended Dub" },
+                { text: "A cidade dorme, mas as máquinas continuam sussurrando. Uma melodia hipnótica surge do caos estático.", track: "Midnight Protocol - Artigo 016 Edit" },
+                { text: "Vozes sintéticas narram o fim de uma era. O baixo rola como um trovão distante em uma tempestade elétrica.", track: "Dystopian Future - Raw Cut" }
+            ];
 
-            setTimeout(() => {
-                content.innerHTML = `
-                    <div class="absolute inset-0 flex items-center justify-center scale-150">
-                        <img src="https://picsum.photos/1000/1000?grayscale" class="w-full h-full object-cover mix-blend-hard-light filter contrast-[200%] brightness-50 invert" />
-                    </div>`;
-            }, 4200);
+            window.generateVibe = function() {
+                const mood = document.getElementById('vibe-mood').value;
+                const setting = document.getElementById('vibe-setting').value;
+                const btn = document.getElementById('vibe-btn');
+                const resultBox = document.getElementById('vibe-result');
+                
+                if (!mood || !setting) return;
 
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-                overlay.classList.remove('flex');
-                document.body.style.overflow = 'auto';
-                document.getElementById('cursor-ring-wrapper').classList.remove('opacity-0');
-                document.getElementById('cursor-dot').classList.remove('opacity-0');
-                content.innerHTML = '';
-            }, 4600);
-        }
+                // Loading state
+                btn.classList.add('bg-gray-800', 'text-gray-500', 'cursor-not-allowed');
+                btn.classList.remove('bg-gradient-to-r', 'text-black', 'hover:scale-105');
+                document.getElementById('vibe-btn-text').textContent = 'Acessando Banco de Dados...';
+                document.getElementById('vibe-icon').setAttribute('data-lucide', 'loader-2');
+                document.getElementById('vibe-icon').classList.add('animate-spin');
+                resultBox.classList.add('hidden');
+                lucide.createIcons();
+
+                setTimeout(() => {
+                    const random = OFFLINE_VIBES[Math.floor(Math.random() * OFFLINE_VIBES.length)];
+                    
+                    document.getElementById('vibe-result-text').textContent = `"${random.text}"`;
+                    document.getElementById('vibe-result-track').textContent = random.track;
+                    
+                    resultBox.classList.remove('hidden');
+                    
+                    // Reset Btn
+                    btn.classList.remove('bg-gray-800', 'text-gray-500', 'cursor-not-allowed');
+                    btn.classList.add('bg-gradient-to-r', 'text-black', 'hover:scale-105');
+                    document.getElementById('vibe-btn-text').textContent = 'Sincronizar Vibe';
+                    document.getElementById('vibe-icon').setAttribute('data-lucide', 'sparkles');
+                    document.getElementById('vibe-icon').classList.remove('animate-spin');
+                    lucide.createIcons();
+                }, 2000);
+            }
+
+            // === EASTER EGG (Horror ARG) ===
+            window.handleSecretClick = function() {
+                clearTimeout(easterEggTimer);
+                easterEggClicks++;
+                
+                if (easterEggClicks === 5) {
+                    startEasterEgg();
+                    easterEggClicks = 0;
+                } else {
+                    easterEggTimer = setTimeout(() => easterEggClicks = 0, 2000);
+                }
+            }
+
+            function startEasterEgg() {
+                const overlay = document.getElementById('easter-egg-overlay');
+                const content = document.getElementById('ee-content');
+                
+                overlay.classList.remove('hidden');
+                overlay.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                document.getElementById('cursor-ring-wrapper').classList.add('opacity-0');
+                document.getElementById('cursor-dot').classList.add('opacity-0');
+
+                // Sequence
+                setTimeout(() => {
+                    content.innerHTML = `<h1 class="text-horror-red font-mono text-xl md:text-3xl tracking-widest animate-crt-flicker">SYSTEM_BREACH_DETECTED //<br/>ERROR: 0x16_SOUL_NOT_FOUND</h1>`;
+                }, 200);
+
+                setTimeout(() => {
+                    content.innerHTML = `
+                        <div class="animate-shake">
+                            <h1 class="text-white font-display font-black text-6xl md:text-9xl horror-text mix-blend-difference mb-4">NÃO OLHE</h1>
+                            <h2 class="text-horror-red font-sans tracking-[1em] text-sm uppercase">Para trás</h2>
+                            <p class="mt-12 font-mono text-gray-500 text-xs">-23.5505° S, 46.6333° W <br/>31.10.2025</p>
+                        </div>`;
+                }, 1700);
+
+                setTimeout(() => {
+                    content.innerHTML = `
+                        <div class="absolute inset-0 flex items-center justify-center scale-150">
+                            <img src="https://picsum.photos/1000/1000?grayscale" class="w-full h-full object-cover mix-blend-hard-light filter contrast-[200%] brightness-50 invert" />
+                        </div>`;
+                }, 4200);
+
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    overlay.classList.remove('flex');
+                    document.body.style.overflow = 'auto';
+                    document.getElementById('cursor-ring-wrapper').classList.remove('opacity-0');
+                    document.getElementById('cursor-dot').classList.remove('opacity-0');
+                    content.innerHTML = '';
+                }, 4600);
+            }
+        });
     </script>
 </body>
 </html>
