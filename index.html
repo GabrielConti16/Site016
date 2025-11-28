@@ -88,11 +88,12 @@
       body {
         background-color: #050505;
         color: #e5e5e5;
-        cursor: none; /* Hide default cursor */
+        /* CURSOR PADRÃO RESTAURADO */
+        cursor: default; 
         overflow-x: hidden;
       }
       
-      /* Noise Effect */
+      /* Noise Effect - Z-Index reduzido para não cobrir interações */
       .bg-noise {
         position: fixed;
         top: -50%;
@@ -100,27 +101,9 @@
         width: 200%;
         height: 200%;
         pointer-events: none;
-        z-index: 50;
+        z-index: 1; /* Fica atrás do conteúdo */
         opacity: 0.04;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-      }
-
-      /* Custom Cursor Styles */
-      .custom-cursor-wrapper {
-        pointer-events: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 9999;
-        mix-blend-mode: difference;
-      }
-      
-      .cursor-ring {
-        transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                    height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                    background-color 0.3s,
-                    border-color 0.3s;
-        transform: translate(-50%, -50%);
       }
 
       /* Glitch Text Base */
@@ -193,14 +176,10 @@
     <!-- 2. Spotlight -->
     <div id="spotlight" class="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300 mix-blend-screen"></div>
 
-    <!-- 3. Cursor -->
-    <div id="cursor-ring-wrapper" class="custom-cursor-wrapper hidden md:block">
-        <div id="cursor-ring" class="cursor-ring w-8 h-8 rounded-full border border-white transition-all duration-300 bg-transparent"></div>
-    </div>
-    <div id="cursor-dot" class="custom-cursor-wrapper w-1 h-1 bg-white rounded-full hidden md:block" style="pointer-events: none;"></div>
+    <!-- REMOVIDO CURSOR PERSONALIZADO -->
 
     <!-- EASTER EGG OVERLAY -->
-    <div id="easter-egg-overlay" class="fixed inset-0 z-[10000] bg-black items-center justify-center overflow-hidden cursor-none hidden">
+    <div id="easter-egg-overlay" class="fixed inset-0 z-[10000] bg-black items-center justify-center overflow-hidden hidden">
         <div class="absolute inset-0 scanlines opacity-50 pointer-events-none"></div>
         <div class="absolute inset-0 bg-[radial-gradient(circle,transparent_0%,rgba(255,0,0,0.4)_100%)] animate-pulse"></div>
         <div class="absolute inset-0 bg-noise opacity-20 pointer-events-none mix-blend-color-dodge"></div>
@@ -214,7 +193,7 @@
     <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-transparent py-6">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <!-- Logo -->
-            <div onclick="scrollToSection('home')" class="cursor-pointer group flex items-center gap-2 cursor-interactive">
+            <div onclick="scrollToSection('home')" class="cursor-pointer group flex items-center gap-2">
                 <i data-lucide="disc" class="w-8 h-8 text-white group-hover:text-neon-cyan transition-colors duration-500" id="nav-logo-icon"></i>
                 <span class="font-display font-bold text-2xl tracking-tighter text-white">
                     ARTIGO <span class="text-neon-cyan group-hover:text-white transition-colors duration-300">016</span>
@@ -223,15 +202,15 @@
 
             <!-- Desktop Nav -->
             <div class="hidden md:flex gap-8">
-                <button onclick="scrollToSection('home')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-neon-cyan cursor-interactive" data-section="home">Início</button>
-                <button onclick="scrollToSection('about')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400 cursor-interactive" data-section="about">Manifesto</button>
-                <button onclick="scrollToSection('music')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400 cursor-interactive" data-section="music">Sons</button>
-                <button onclick="scrollToSection('ai-vibe')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400 cursor-interactive" data-section="ai-vibe">Oráculo AI</button>
-                <button onclick="scrollToSection('contact')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400 cursor-interactive" data-section="contact">Booking</button>
+                <button onclick="scrollToSection('home')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-neon-cyan" data-section="home">Início</button>
+                <button onclick="scrollToSection('about')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400" data-section="about">Manifesto</button>
+                <button onclick="scrollToSection('music')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400" data-section="music">Sons</button>
+                <button onclick="scrollToSection('ai-vibe')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400" data-section="ai-vibe">Oráculo AI</button>
+                <button onclick="scrollToSection('contact')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400" data-section="contact">Booking</button>
             </div>
 
             <!-- Mobile Menu Button -->
-            <button onclick="toggleMobileMenu()" class="md:hidden text-white hover:text-neon-cyan transition-colors cursor-interactive">
+            <button onclick="toggleMobileMenu()" class="md:hidden text-white hover:text-neon-cyan transition-colors">
                 <i data-lucide="menu" id="menu-icon"></i>
             </button>
         </div>
@@ -265,24 +244,22 @@
             <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
                 <h2 class="text-neon-cyan font-sans tracking-[0.3em] text-sm md:text-base mb-4 animate-fade-in-up">DUO ELETRÔNICO // BRASIL</h2>
                 <h1 class="font-display font-black text-6xl md:text-8xl lg:text-9xl text-white mb-6 glitch-text leading-tight mix-blend-lighten" data-text="ARTIGO 016">
-                    ARTIGO <span onclick="handleSecretClick()" class="cursor-help hover:text-horror-red transition-colors duration-100 selection:bg-red-900 cursor-interactive">016</span>
+                    ARTIGO <span onclick="handleSecretClick()" class="cursor-help hover:text-horror-red transition-colors duration-100 selection:bg-red-900">016</span>
                 </h1>
                 <p class="text-gray-400 font-light text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">Arquitetura sonora para mentes distópicas. Techno, Industrial e a beleza do caos.</p>
 
                 <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
-                    <button onclick="scrollToSection('music')" class="group relative px-8 py-3 bg-transparent border border-neon-cyan text-neon-cyan overflow-hidden transition-all duration-300 font-display tracking-wider uppercase text-sm w-full md:w-auto cursor-interactive">
-                        <div class="absolute inset-0 w-0 bg-neon-cyan transition-all duration-[250ms] ease-out group-hover:w-full opacity-10"></div>
-                        <span class="relative group-hover:text-white transition-colors">Ouvir Tracks</span>
+                    <button onclick="scrollToSection('music')" class="group relative px-8 py-3 bg-transparent border border-neon-cyan text-neon-cyan overflow-hidden transition-all duration-300 font-display tracking-wider uppercase text-sm w-full md:w-auto hover:bg-neon-cyan hover:text-black">
+                        <span class="relative">Ouvir Tracks</span>
                     </button>
-                    <button onclick="scrollToSection('contact')" class="group relative px-8 py-3 bg-white text-black overflow-hidden transition-all duration-300 font-display tracking-wider uppercase text-sm w-full md:w-auto cursor-interactive">
-                         <div class="absolute inset-0 bg-gray-200 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    <button onclick="scrollToSection('contact')" class="group relative px-8 py-3 bg-white text-black overflow-hidden transition-all duration-300 font-display tracking-wider uppercase text-sm w-full md:w-auto hover:bg-gray-200">
                          <span class="relative z-10">Book Now</span>
                     </button>
                 </div>
             </div>
 
-            <button onclick="scrollToSection('about')" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-neon-cyan hover:text-white transition-colors cursor-interactive z-40 p-2 opacity-90 hover:opacity-100">
-                <!-- SVG INLINE PARA GARANTIR VISIBILIDADE SEM SCRIPT -->
+            <button onclick="scrollToSection('about')" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-neon-cyan hover:text-white transition-colors z-50 p-4 opacity-90 hover:opacity-100 cursor-pointer">
+                <!-- SVG INLINE PARA GARANTIR VISIBILIDADE -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="drop-shadow-[0_0_8px_rgba(0,243,255,0.6)]">
                     <path d="M12 5v14"></path>
                     <path d="m19 12-7 7-7-7"></path>
@@ -332,7 +309,7 @@
                          <div class="absolute inset-0 flex flex-col items-center justify-center p-8 border border-white/10 m-4">
                             <h3 class="font-display text-4xl text-white font-bold mb-2 text-center">DISTOPIA VOL. 1</h3>
                             <span class="text-neon-cyan tracking-widest text-sm mb-8">EP JÁ DISPONÍVEL</span>
-                            <button class="px-6 py-2 bg-white text-black font-bold uppercase hover:bg-neon-cyan transition-colors cursor-interactive">Spotify</button>
+                            <button class="px-6 py-2 bg-white text-black font-bold uppercase hover:bg-neon-cyan transition-colors">Spotify</button>
                          </div>
                     </div>
 
@@ -360,16 +337,16 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         <div class="space-y-2">
                             <label class="text-xs uppercase tracking-wider text-gray-500 ml-1">Onde você está?</label>
-                            <input type="text" id="vibe-setting" placeholder="Ex: Armazém abandonado, Rooftop..." class="w-full bg-black/50 border border-white/10 rounded-none p-4 text-white focus:border-neon-cyan focus:outline-none transition-colors font-sans placeholder-gray-700 cursor-interactive" />
+                            <input type="text" id="vibe-setting" placeholder="Ex: Armazém abandonado, Rooftop..." class="w-full bg-black/50 border border-white/10 rounded-none p-4 text-white focus:border-neon-cyan focus:outline-none transition-colors font-sans placeholder-gray-700" />
                         </div>
                         <div class="space-y-2">
                             <label class="text-xs uppercase tracking-wider text-gray-500 ml-1">Como você se sente?</label>
-                            <input type="text" id="vibe-mood" placeholder="Ex: Elétrico, Melancólico..." class="w-full bg-black/50 border border-white/10 rounded-none p-4 text-white focus:border-neon-purple focus:outline-none transition-colors font-sans placeholder-gray-700 cursor-interactive" />
+                            <input type="text" id="vibe-mood" placeholder="Ex: Elétrico, Melancólico..." class="w-full bg-black/50 border border-white/10 rounded-none p-4 text-white focus:border-neon-purple focus:outline-none transition-colors font-sans placeholder-gray-700" />
                         </div>
                     </div>
 
                     <div class="flex justify-center mb-12">
-                        <button onclick="generateVibe()" id="vibe-btn" class="px-8 py-4 font-display font-bold uppercase tracking-widest text-sm transition-all duration-300 flex items-center gap-3 bg-gradient-to-r from-neon-cyan to-neon-purple text-black hover:scale-105 shadow-[0_0_20px_rgba(188,19,254,0.3)] cursor-interactive">
+                        <button onclick="generateVibe()" id="vibe-btn" class="px-8 py-4 font-display font-bold uppercase tracking-widest text-sm transition-all duration-300 flex items-center gap-3 bg-gradient-to-r from-neon-cyan to-neon-purple text-black hover:scale-105 shadow-[0_0_20px_rgba(188,19,254,0.3)]">
                             <i data-lucide="sparkles" class="w-4 h-4" id="vibe-icon"></i>
                             <span id="vibe-btn-text">Sincronizar Vibe</span>
                         </button>
@@ -401,25 +378,25 @@
                         <h2 class="font-display text-4xl font-bold text-white mb-6">BOOKING & CONTATO</h2>
                         <p class="text-gray-400 mb-10 max-w-md">Para contratações, remixes ou colaborações, entre em contato com nossa equipe de management.</p>
                         <div class="space-y-6">
-                            <a href="mailto:booking@artigo016.com" class="flex items-center gap-4 group cursor-interactive">
+                            <a href="mailto:booking@artigo016.com" class="flex items-center gap-4 group">
                                 <div class="w-12 h-12 border border-white/20 flex items-center justify-center group-hover:border-neon-cyan group-hover:bg-neon-cyan/10 transition-colors">
                                     <i data-lucide="mail" class="text-white group-hover:text-neon-cyan transition-colors"></i>
                                 </div>
                                 <span class="text-lg text-white group-hover:text-neon-cyan transition-colors">booking@artigo016.com</span>
                             </a>
                             <div class="pt-8 flex gap-6">
-                                <a href="#" class="text-gray-400 hover:text-neon-purple transition-colors cursor-interactive"><i data-lucide="instagram"></i></a>
-                                <a href="#" class="text-gray-400 hover:text-neon-purple transition-colors cursor-interactive"><i data-lucide="twitter"></i></a>
-                                <a href="#" class="text-gray-400 hover:text-neon-purple transition-colors cursor-interactive"><i data-lucide="disc"></i></a>
+                                <a href="#" class="text-gray-400 hover:text-neon-purple transition-colors"><i data-lucide="instagram"></i></a>
+                                <a href="#" class="text-gray-400 hover:text-neon-purple transition-colors"><i data-lucide="twitter"></i></a>
+                                <a href="#" class="text-gray-400 hover:text-neon-purple transition-colors"><i data-lucide="disc"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="w-full md:w-5/12">
                         <form class="space-y-4" onsubmit="event.preventDefault()">
-                            <input type="text" placeholder="Seu Nome / Agência" class="w-full bg-zinc-900 border border-zinc-800 p-4 text-white focus:border-white focus:outline-none transition-colors cursor-interactive" />
-                            <input type="email" placeholder="Email para Contato" class="w-full bg-zinc-900 border border-zinc-800 p-4 text-white focus:border-white focus:outline-none transition-colors cursor-interactive" />
-                            <textarea rows="4" placeholder="Detalhes do Evento" class="w-full bg-zinc-900 border border-zinc-800 p-4 text-white focus:border-white focus:outline-none transition-colors cursor-interactive"></textarea>
-                            <button class="w-full py-4 bg-white text-black font-display font-bold uppercase tracking-widest hover:bg-neon-cyan hover:text-black transition-all duration-300 cursor-interactive">Enviar Mensagem</button>
+                            <input type="text" placeholder="Seu Nome / Agência" class="w-full bg-zinc-900 border border-zinc-800 p-4 text-white focus:border-white focus:outline-none transition-colors" />
+                            <input type="email" placeholder="Email para Contato" class="w-full bg-zinc-900 border border-zinc-800 p-4 text-white focus:border-white focus:outline-none transition-colors" />
+                            <textarea rows="4" placeholder="Detalhes do Evento" class="w-full bg-zinc-900 border border-zinc-800 p-4 text-white focus:border-white focus:outline-none transition-colors"></textarea>
+                            <button class="w-full py-4 bg-white text-black font-display font-bold uppercase tracking-widest hover:bg-neon-cyan hover:text-black transition-all duration-300">Enviar Mensagem</button>
                         </form>
                     </div>
                 </div>
@@ -497,10 +474,7 @@
                 lucide.createIcons();
             }
 
-            // === MOUSE FX (Cursor & Parallax) ===
-            const cursorRing = document.getElementById('cursor-ring');
-            const cursorRingWrapper = document.getElementById('cursor-ring-wrapper');
-            const cursorDot = document.getElementById('cursor-dot');
+            // === SPOTLIGHT & PARALLAX ===
             const spotlight = document.getElementById('spotlight');
             const blobs = [
                 { el: document.getElementById('blob-1'), factor: 0.04 },
@@ -509,16 +483,6 @@
             ];
 
             window.addEventListener('mousemove', (e) => {
-                // Dot (Instant)
-                if(cursorDot) cursorDot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
-                
-                // Ring (Lag)
-                if(cursorRingWrapper) {
-                    cursorRingWrapper.animate({
-                        transform: `translate3d(${e.clientX}px, ${e.clientY}px, 0)`
-                    }, { duration: 400, fill: "forwards" });
-                }
-
                 // Spotlight
                 if(spotlight) spotlight.style.background = `radial-gradient(800px circle at ${e.clientX}px ${e.clientY}px, rgba(20, 20, 30, 0.4), transparent 40%)`;
 
@@ -530,20 +494,6 @@
                         blob.el.style.transform = `translate(${x}px, ${y}px)`;
                     }
                 });
-            });
-
-            // Interactive Hover Effect
-            document.addEventListener('mouseover', (e) => {
-                const target = e.target;
-                const isInteractive = target.closest('a') || target.closest('button') || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.classList.contains('cursor-interactive');
-                
-                if (isInteractive && cursorRing) {
-                    cursorRing.classList.remove('w-8', 'h-8', 'bg-transparent');
-                    cursorRing.classList.add('w-16', 'h-16', 'bg-white/20', 'border-transparent', 'backdrop-blur-sm');
-                } else if(cursorRing) {
-                    cursorRing.classList.add('w-8', 'h-8', 'bg-transparent');
-                    cursorRing.classList.remove('w-16', 'h-16', 'bg-white/20', 'border-transparent', 'backdrop-blur-sm');
-                }
             });
 
             // === MUSIC LOGIC ===
@@ -561,7 +511,7 @@
                 trackListContainer.innerHTML = tracks.map(track => `
                     <div class="group flex items-center justify-between p-4 border border-white/5 hover:border-neon-cyan/50 hover:bg-white/5 transition-all duration-300 ${playingTrack === track.id ? 'border-neon-cyan bg-white/5' : ''}">
                         <div class="flex items-center gap-4">
-                            <button onclick="toggleTrack('${track.id}')" class="w-10 h-10 flex items-center justify-center rounded-full border ${playingTrack === track.id ? 'border-neon-cyan text-neon-cyan' : 'border-white/20 text-white group-hover:border-white'} transition-colors cursor-interactive">
+                            <button onclick="toggleTrack('${track.id}')" class="w-10 h-10 flex items-center justify-center rounded-full border ${playingTrack === track.id ? 'border-neon-cyan text-neon-cyan' : 'border-white/20 text-white group-hover:border-white'} transition-colors">
                                 <i data-lucide="${playingTrack === track.id ? 'pause' : 'play'}" class="w-4 h-4"></i>
                             </button>
                             <div>
@@ -575,7 +525,7 @@
                         </div>
                         <div class="flex items-center gap-4">
                             <span class="font-mono text-sm text-gray-400 hidden sm:block">${track.duration}</span>
-                            <a href="#" class="text-gray-500 hover:text-white transition-colors cursor-interactive"><i data-lucide="external-link" class="w-4 h-4"></i></a>
+                            <a href="#" class="text-gray-500 hover:text-white transition-colors"><i data-lucide="external-link" class="w-4 h-4"></i></a>
                         </div>
                     </div>
                 `).join('');
@@ -653,9 +603,7 @@
                 overlay.classList.remove('hidden');
                 overlay.classList.add('flex');
                 document.body.style.overflow = 'hidden';
-                document.getElementById('cursor-ring-wrapper').classList.add('opacity-0');
-                document.getElementById('cursor-dot').classList.add('opacity-0');
-
+                
                 // Sequence
                 setTimeout(() => {
                     content.innerHTML = `<h1 class="text-horror-red font-mono text-xl md:text-3xl tracking-widest animate-crt-flicker">SYSTEM_BREACH_DETECTED //<br/>ERROR: 0x16_SOUL_NOT_FOUND</h1>`;
@@ -681,8 +629,6 @@
                     overlay.classList.add('hidden');
                     overlay.classList.remove('flex');
                     document.body.style.overflow = 'auto';
-                    document.getElementById('cursor-ring-wrapper').classList.remove('opacity-0');
-                    document.getElementById('cursor-dot').classList.remove('opacity-0');
                     content.innerHTML = '';
                 }, 4600);
             }
