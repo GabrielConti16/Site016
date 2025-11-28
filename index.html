@@ -40,8 +40,13 @@
               'crt-flicker': 'crtFlicker 0.1s infinite',
               'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
               'spin-slow': 'spin 3s linear infinite',
+              'marquee': 'marquee 15s linear infinite',
             },
             keyframes: {
+              marquee: {
+                '0%': { transform: 'translateX(0%)' },
+                '100%': { transform: 'translateX(-100%)' },
+              },
               glitch: {
                 '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
                 '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
@@ -190,7 +195,7 @@
     </div>
 
     <!-- NAVBAR -->
-    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-transparent py-6">
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-deep-black/90 backdrop-blur-md py-4">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <!-- Logo -->
             <div onclick="scrollToSection('home')" class="cursor-pointer group flex items-center gap-2">
@@ -205,7 +210,6 @@
                 <button onclick="scrollToSection('home')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-neon-cyan" data-section="home">Início</button>
                 <button onclick="scrollToSection('about')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400" data-section="about">Manifesto</button>
                 <button onclick="scrollToSection('music')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400" data-section="music">Sons</button>
-                <button onclick="scrollToSection('ai-vibe')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400" data-section="ai-vibe">Oráculo AI</button>
                 <button onclick="scrollToSection('contact')" class="nav-link font-sans text-sm tracking-widest uppercase hover:text-neon-cyan transition-colors duration-300 text-gray-400" data-section="contact">Booking</button>
             </div>
 
@@ -220,7 +224,6 @@
             <button onclick="scrollToSection('home'); toggleMobileMenu()" class="text-left font-display text-xl uppercase text-gray-300 hover:text-neon-cyan">Início</button>
             <button onclick="scrollToSection('about'); toggleMobileMenu()" class="text-left font-display text-xl uppercase text-gray-300 hover:text-neon-cyan">Manifesto</button>
             <button onclick="scrollToSection('music'); toggleMobileMenu()" class="text-left font-display text-xl uppercase text-gray-300 hover:text-neon-cyan">Sons</button>
-            <button onclick="scrollToSection('ai-vibe'); toggleMobileMenu()" class="text-left font-display text-xl uppercase text-gray-300 hover:text-neon-cyan">Oráculo AI</button>
             <button onclick="scrollToSection('contact'); toggleMobileMenu()" class="text-left font-display text-xl uppercase text-gray-300 hover:text-neon-cyan">Booking</button>
         </div>
     </nav>
@@ -321,54 +324,21 @@
             </div>
         </section>
 
-        <!-- AI VIBE GENERATOR -->
-        <section id="ai-vibe" class="py-24 bg-zinc-950 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-neon-purple/5 to-transparent pointer-events-none"></div>
-            <div class="container mx-auto px-6 relative z-10">
-                <div class="max-w-4xl mx-auto">
-                    <div class="text-center mb-12">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gray-700 bg-gray-900/50 text-gray-400 text-xs tracking-widest uppercase mb-4">
-                            <i data-lucide="database" class="w-3 h-3"></i> <span>Offline Protocol Loaded</span>
-                        </div>
-                        <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-4">ORÁCULO DO RITMO</h2>
-                        <p class="text-gray-400 font-light">Descreva seu ambiente e seu estado mental. O sistema irá recuperar um fragmento de memória sonora.</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                        <div class="space-y-2">
-                            <label class="text-xs uppercase tracking-wider text-gray-500 ml-1">Onde você está?</label>
-                            <input type="text" id="vibe-setting" placeholder="Ex: Armazém abandonado, Rooftop..." class="w-full bg-black/50 border border-white/10 rounded-none p-4 text-white focus:border-neon-cyan focus:outline-none transition-colors font-sans placeholder-gray-700" />
-                        </div>
-                        <div class="space-y-2">
-                            <label class="text-xs uppercase tracking-wider text-gray-500 ml-1">Como você se sente?</label>
-                            <input type="text" id="vibe-mood" placeholder="Ex: Elétrico, Melancólico..." class="w-full bg-black/50 border border-white/10 rounded-none p-4 text-white focus:border-neon-purple focus:outline-none transition-colors font-sans placeholder-gray-700" />
-                        </div>
-                    </div>
-
-                    <div class="flex justify-center mb-12">
-                        <button onclick="generateVibe()" id="vibe-btn" class="px-8 py-4 font-display font-bold uppercase tracking-widest text-sm transition-all duration-300 flex items-center gap-3 bg-gradient-to-r from-neon-cyan to-neon-purple text-black hover:scale-105 shadow-[0_0_20px_rgba(188,19,254,0.3)]">
-                            <i data-lucide="sparkles" class="w-4 h-4" id="vibe-icon"></i>
-                            <span id="vibe-btn-text">Sincronizar Vibe</span>
-                        </button>
-                    </div>
-
-                    <div id="vibe-result" class="hidden animate-fade-in-up bg-white/5 border border-white/10 p-8 md:p-12 relative overflow-hidden group">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-neon-cyan to-neon-purple"></div>
-                        <div class="relative z-10">
-                             <h3 class="text-neon-cyan font-mono text-xs mb-4 uppercase tracking-widest">Arquivo Recuperado</h3>
-                             <p id="vibe-result-text" class="text-white font-light text-lg md:text-2xl leading-relaxed italic mb-8"></p>
-                             <div class="flex items-center gap-4 p-4 bg-black/40 border border-white/5">
-                               <div class="w-12 h-12 bg-gray-800 flex items-center justify-center text-white"><i data-lucide="music-2"></i></div>
-                               <div>
-                                 <span class="block text-xs text-gray-500 uppercase tracking-widest">Track Sugerida</span>
-                                 <span id="vibe-result-track" class="block font-display text-neon-purple font-bold text-lg"></span>
-                               </div>
-                             </div>
-                        </div>
-                    </div>
+        <!-- TAG SECTION (Substituindo IA) -->
+        <section class="py-24 bg-neon-cyan relative overflow-hidden border-y border-white/10">
+            <!-- Glitchy Marquee -->
+            <div class="relative w-full -rotate-2 scale-110">
+                <div class="flex whitespace-nowrap animate-marquee">
+                    <h2 class="font-display font-black text-7xl md:text-9xl text-black mx-8 tracking-tighter">ARTIGO ABAIXA A MASTER DESGRAÇA</h2>
+                    <h2 class="font-display font-black text-7xl md:text-9xl text-black mx-8 tracking-tighter">ARTIGO ABAIXA A MASTER DESGRAÇA</h2>
+                    <h2 class="font-display font-black text-7xl md:text-9xl text-black mx-8 tracking-tighter">ARTIGO ABAIXA A MASTER DESGRAÇA</h2>
+                    <h2 class="font-display font-black text-7xl md:text-9xl text-black mx-8 tracking-tighter">ARTIGO ABAIXA A MASTER DESGRAÇA</h2>
                 </div>
             </div>
+            
+            <div class="absolute inset-0 bg-black/10 pointer-events-none bg-[size:4px_4px] bg-[linear-gradient(rgba(0,0,0,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.2)_1px,transparent_1px)]"></div>
         </section>
+
 
         <!-- CONTACT SECTION -->
         <section id="contact" class="py-24 bg-black border-t border-white/5">
@@ -436,7 +406,7 @@
                 }
 
                 // Active section highlighting
-                const sections = ['home', 'about', 'music', 'ai-vibe', 'contact'];
+                const sections = ['home', 'about', 'music', 'contact'];
                 let current = '';
                 sections.forEach(section => {
                     const element = document.getElementById(section);
@@ -538,50 +508,6 @@
             }
 
             renderTracks();
-
-            // === AI VIBE GENERATOR (Offline) ===
-            const OFFLINE_VIBES = [
-                { text: "Ecos metálicos reverberam no vazio de concreto. A escuridão dança com a luz estroboscópica.", track: "Industrial Soul - Artigo 016 Remix" },
-                { text: "Frequências baixas distorcem a realidade. O cheiro de chuva ácida e fumaça de máquina preenche seus pulmões.", track: "Acid Rain 303 - Original Mix" },
-                { text: "Um labirinto de néon quebrado onde o tempo para. Batidas cardíacas sincronizadas com o kick drum distorcido.", track: "System Error - Extended Dub" },
-                { text: "A cidade dorme, mas as máquinas continuam sussurrando. Uma melodia hipnótica surge do caos estático.", track: "Midnight Protocol - Artigo 016 Edit" },
-                { text: "Vozes sintéticas narram o fim de uma era. O baixo rola como um trovão distante em uma tempestade elétrica.", track: "Dystopian Future - Raw Cut" }
-            ];
-
-            window.generateVibe = function() {
-                const mood = document.getElementById('vibe-mood').value;
-                const setting = document.getElementById('vibe-setting').value;
-                const btn = document.getElementById('vibe-btn');
-                const resultBox = document.getElementById('vibe-result');
-                
-                if (!mood || !setting) return;
-
-                // Loading state
-                btn.classList.add('bg-gray-800', 'text-gray-500', 'cursor-not-allowed');
-                btn.classList.remove('bg-gradient-to-r', 'text-black', 'hover:scale-105');
-                document.getElementById('vibe-btn-text').textContent = 'Acessando Banco de Dados...';
-                document.getElementById('vibe-icon').setAttribute('data-lucide', 'loader-2');
-                document.getElementById('vibe-icon').classList.add('animate-spin');
-                resultBox.classList.add('hidden');
-                lucide.createIcons();
-
-                setTimeout(() => {
-                    const random = OFFLINE_VIBES[Math.floor(Math.random() * OFFLINE_VIBES.length)];
-                    
-                    document.getElementById('vibe-result-text').textContent = `"${random.text}"`;
-                    document.getElementById('vibe-result-track').textContent = random.track;
-                    
-                    resultBox.classList.remove('hidden');
-                    
-                    // Reset Btn
-                    btn.classList.remove('bg-gray-800', 'text-gray-500', 'cursor-not-allowed');
-                    btn.classList.add('bg-gradient-to-r', 'text-black', 'hover:scale-105');
-                    document.getElementById('vibe-btn-text').textContent = 'Sincronizar Vibe';
-                    document.getElementById('vibe-icon').setAttribute('data-lucide', 'sparkles');
-                    document.getElementById('vibe-icon').classList.remove('animate-spin');
-                    lucide.createIcons();
-                }, 2000);
-            }
 
             // === EASTER EGG (Horror ARG) ===
             window.handleSecretClick = function() {
